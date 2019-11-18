@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
 
 class Book extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      'category': props.book.shelf
-    }
+
+  camelCaseString(arr) {
+    const array = arr.split(" ");
+    array[0] = array[0].toLowerCase();
+    array.forEach((el, index) => {
+      if (index > 0) {
+        const first = el.substr(0, 1).toUpperCase();
+        const rest = el.substr(1).toLowerCase();
+        array[index] = first + rest;
+      }
+    });
+    return array.join("");
   }
-  
+
   render() {
-    const book = this.props;
+    const book = this.props.book;    
+    const categories = ["Currently Reading", "Want to Read", "Read", "None"];
     return (
       <div className="book">
         <div className="book-top">
@@ -18,23 +26,36 @@ class Book extends Component {
             style={{
               width: 128,
               height: 193,
-              backgroundImage:`url(${book.book.imageLinks.thumbnail})`
+              backgroundImage: `url(${book.imageLinks.thumbnail})`
             }}
           ></div>
           <div className="book-shelf-changer">
-            <select>
+            <select
+              defaultValue={`${book.shelf}`}
+              onChange={event => this.props.onChangeBook(book, event)}
+            >
               <option value="move" disabled>
                 Move to...
               </option>
-              <option value="currentlyReading">Currently Reading</option>
-              <option value="wantToRead">Want to Read</option>
-              <option value="read">Read</option>
-              <option value="none">None</option>
+              {categories.map((category, index) => {
+                const categoryValue = this.camelCaseString(category);
+                return (
+                  <option key={index} value={`${categoryValue}`}>
+                    {category}
+                  </option>
+                );
+              })}
             </select>
           </div>
         </div>
-        <div className="book-title">{book.book.title}</div>
-        <div className="book-authors">{book.book.author}</div>
+        <div className="book-title">{book.title}</div>
+        {book.authors.map((author, index) => {
+          return (
+            <div key={index} className="book-authors">
+              {author}
+            </div>
+          );
+        })}
       </div>
     );
   }

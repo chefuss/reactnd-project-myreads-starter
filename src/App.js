@@ -13,18 +13,29 @@ class BooksApp extends React.Component {
      */
     showSearchPage: false,
     books: []
-  }
+  };
   componentDidMount() {
-    BooksAPI.getAll()
-      .then((books) => {
-        this.setState(() => ({
-          books
-        }))
-      })
+    BooksAPI.getAll().then(data => {
+      this.setState(() => ({
+        books: data
+      }));
+    });
   }
-  render() {
-        console.log(this.state);
 
+  updateList = (book, event) => {
+    let currentBooks = this.state.books;
+    let selectedBook = currentBooks.filter(currentBook => {
+      return currentBook.id === book.id;
+    });
+    selectedBook = selectedBook[0];
+    selectedBook.shelf = event.target.value;
+    BooksAPI.update(selectedBook, event.target.value).then(response => {
+      this.setState({
+        books: currentBooks
+      });
+    });
+  };
+  render() {
     return (
       <div className="app">
         {this.state.showSearchPage ? (
@@ -60,16 +71,25 @@ class BooksApp extends React.Component {
             <div className="list-books-content">
               <div>
                 <BookShelf
-                  category={this.state.books.filter(book => book.shelf === "currentlyReading")}
-                  categoryName = 'Currenty Reading'
+                  onBookChange={this.updateList}
+                  category={this.state.books.filter(
+                    book => book.shelf === "currentlyReading"
+                  )}
+                  categoryName="Currenty Reading"
                 />
                 <BookShelf
-                  category={this.state.books.filter(book => book.shelf === "wantToRead")}
-                  categoryName = 'Want to Read'
+                  onBookChange={this.updateList}
+                  category={this.state.books.filter(
+                    book => book.shelf === "wantToRead"
+                  )}
+                  categoryName="Want to Read"
                 />
                 <BookShelf
-                  category={this.state.books.filter(book => book.shelf === "read")}
-                  categoryName = 'Read'
+                  onBookChange={this.updateList}
+                  category={this.state.books.filter(
+                    book => book.shelf === "read"
+                  )}
+                  categoryName="Read"
                 />
               </div>
             </div>
