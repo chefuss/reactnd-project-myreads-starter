@@ -14,9 +14,10 @@ class Book extends Component {
     });
     return array.join("");
   }
-
+ 
   render() {
-    const book = this.props.book;    
+    const book = this.props.book;   
+    const bookAuthors = book.authors ? book.authors.join(", ") : "";
     const categories = ["Currently Reading", "Want to Read", "Read", "None"];
     return (
       <div className="book">
@@ -32,7 +33,7 @@ class Book extends Component {
           <div className="book-shelf-changer">
             <select
               defaultValue={`${book.shelf}`}
-              onChange={event => this.props.onChangeBook(book, event)}
+              onChange={event => this.props.onShelfChange(book, event.target.value)}
             >
               <option value="move" disabled>
                 Move to...
@@ -49,13 +50,7 @@ class Book extends Component {
           </div>
         </div>
         <div className="book-title">{book.title}</div>
-        {book.authors.map((author, index) => {
-          return (
-            <div key={index} className="book-authors">
-              {author}
-            </div>
-          );
-        })}
+        <div className="book-authors">{bookAuthors}</div>
       </div>
     );
   }

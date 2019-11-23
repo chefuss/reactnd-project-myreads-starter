@@ -2,22 +2,15 @@ import React from "react";
 import * as BooksAPI from "./BooksAPI";
 import "./App.css";
 import BookShelf from "./BookShelf";
-import { Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class ListOfBooks extends React.Component {
   state = {
     books: []
   };
-  componentDidMount() {
-    BooksAPI.getAll().then(data => {
-      this.setState(() => ({
-        books: data
-      }));
-    });
-  }
 
   updateList = (book, event) => {
-    let currentBooks = this.state.books;
+    let currentBooks = this.props.books;
     let selectedBook = currentBooks.filter(currentBook => {
       return currentBook.id === book.id;
     });
@@ -38,24 +31,22 @@ class ListOfBooks extends React.Component {
         <div className="list-books-content">
           <div>
             <BookShelf
-              onBookChange={this.updateList}
-              category={this.state.books.filter(
+              onShelfChange={this.props.onShelfChange}
+              category={this.props.books.filter(
                 book => book.shelf === "currentlyReading"
               )}
               categoryName="Currenty Reading"
             />
             <BookShelf
-              onBookChange={this.updateList}
-              category={this.state.books.filter(
+              onShelfChange={this.props.onShelfChange}
+              category={this.props.books.filter(
                 book => book.shelf === "wantToRead"
               )}
               categoryName="Want to Read"
             />
             <BookShelf
-              onBookChange={this.updateList}
-              category={this.state.books.filter(
-                book => book.shelf === "read"
-              )}
+              onShelfChange={this.props.onShelfChange}
+              category={this.props.books.filter(book => book.shelf === "read")}
               categoryName="Read"
             />
           </div>
