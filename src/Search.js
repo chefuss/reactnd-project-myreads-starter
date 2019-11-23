@@ -17,30 +17,25 @@ class Search extends React.Component {
   }
  
   /* 
-  	Update the shelf for each book, 
-  	none if the book is not on any shelf and 
-  	if the id book founds on book shelf 
-  	then set the current book shelf
+    If the book has no shelf, set it to none
+    else set it to the correct shelf
   */
   updateData = books => {
-    const cBooks = books.map(book => {
-      //Check where is the book ?
-      book.shelf = "none";
-      this.props.books.forEach(book2 => {
-        if (book.id === book2.id) {
-          book.shelf = book2.shelf;
+    const currentBooks = books.map(queryBook => {
+      queryBook.shelf = "none";
+      this.props.books.forEach(book => {
+        if (queryBook.id === book.id) {
+          queryBook.shelf = book.shelf;
         }
       });
-      return book;
+      return queryBook;
     });
+
     this.setState({
-      books: cBooks
+      books: currentBooks
     });
   };
 
-  /* 
-  	Read the query when the user types on and display 20 books by calling search method on BookAPI.js
-  */
   updateQuery = query => {
     this.setState({ query });
     if (query) {
@@ -55,11 +50,7 @@ class Search extends React.Component {
         });
     } else {
       this.setState({ books: [] });
-    } //With any errors
-  };
-
-  clearSearch = () => {
-    this.setState({ books: [] });
+    } 
   };
   render() {
     return (

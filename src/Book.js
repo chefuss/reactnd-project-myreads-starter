@@ -18,6 +18,10 @@ class Book extends Component {
   render() {
     const book = this.props.book;   
     const bookAuthors = book.authors ? book.authors.join(", ") : "";
+    const bookThumbnail =
+      book.imageLinks && book.imageLinks.thumbnail
+        ? `url(${book.imageLinks.thumbnail})`
+        : "";
     const categories = ["Currently Reading", "Want to Read", "Read", "None"];
     return (
       <div className="book">
@@ -27,7 +31,7 @@ class Book extends Component {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: `url(${book.imageLinks.thumbnail})`
+              backgroundImage: `${bookThumbnail}`
             }}
           ></div>
           <div className="book-shelf-changer">

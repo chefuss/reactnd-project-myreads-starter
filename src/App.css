@@ -187,8 +187,8 @@ button:active {
 /* book cover */
 
 .book-cover {
+  background:  #eee url('./icons/not-found.svg') no-repeat center;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  background: #eee;
 }
 
 .book-cover-title {
