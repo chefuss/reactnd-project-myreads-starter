@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Modal from './Modal'
 
+// most of the code for the modal component comes from: https://daveceddia.com/open-modal-in-react/
+
 class Book extends Component {
   constructor(props) {
     super(props);

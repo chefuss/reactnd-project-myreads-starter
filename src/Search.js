@@ -11,9 +11,12 @@ class Search extends React.Component {
     this.state = {
       books: props.books,
       query: ""
-    }
+    };
   }
-  updateData = books => {
+  // I checked the code from: https://github.com/elhammj/MyReads/blob/master/src/BookSearch.js
+  // to complete my function of the shelfs change.
+
+  updateBooksShelf = books => {
     const currentBooks = books.map(queryBook => {
       queryBook.shelf = "none";
       this.props.books.forEach(book => {
@@ -29,21 +32,21 @@ class Search extends React.Component {
     });
   };
 
-  updateQuery = query => {
+  searchForBooks = query => {
     this.setState({ query });
     if (query) {
-      BooksAPI.search(query, 20)
-        .then(books => {
-          books.length > 0
-            ? this.updateData(books)
-            : this.setState({ books: [] });            
-        })
-        .catch(e => {
-          console.error(`The API responded with an error: ${e}`);
-        });
+      BooksAPI.search(query, 20).then(books => {
+        books.length > 0 ? this.updateBooksShelf(books) : this.clearBooks();
+      });
     } else {
-      this.setState({ books: [] });
-    } 
+      this.clearBooks();
+    }
+  };
+
+  clearBooks = () => {
+    this.setState({
+      books: []
+    });
   };
   render() {
     return (
@@ -57,15 +60,18 @@ class Search extends React.Component {
               type="text"
               placeholder="Search by title or author"
               value={this.state.query}
-              onChange={event => this.updateQuery(event.target.value)}
+              onChange={event => this.searchForBooks(event.target.value)}
             />
           </div>
         </div>
         <div className="search-books-results">
+          {this.state.books.length === 0 && (
+            <h2>Sorry no books to show, try to search something else</h2>
+          )}
           <ol className="books-grid">
             {this.state.books.map(book => (
               <li key={book.id}>
-                <Book book={book} onShelfChange={this.props.onShelfChange}/>
+                <Book book={book} onShelfChange={this.props.onShelfChange} />
               </li>
             ))}
           </ol>

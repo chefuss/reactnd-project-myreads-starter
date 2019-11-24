@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+// most of the code for the modal component comes from: https://daveceddia.com/open-modal-in-react/
+
 class Modal extends Component {
   render() {
     if (!this.props.show){
