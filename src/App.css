@@ -255,7 +255,7 @@ button:active {
   overflow-y: auto;
   z-index: 9999;
   padding: 2rem;
-  color: #333333;
+  color: #333;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 .modal-heading h1,
@@ -297,7 +297,7 @@ button:active {
   content: '';
   width: 30px;
   height: 4px;
-  background: #333333;
+  background: #333;
   display: block;
   transform: rotate(135deg);
   position: absolute;
