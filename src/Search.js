@@ -1,8 +1,8 @@
-import React from "react";
-import * as BooksAPI from "./BooksAPI";
-import "./App.css";
+import React from 'react';
+import * as BooksAPI from './BooksAPI';
+import './App.css';
 import Book from './Book'
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 
 class Search extends React.Component {
@@ -18,7 +18,7 @@ class Search extends React.Component {
 
   updateBooksShelf = books => {
     const currentBooks = books.map(queryBook => {
-      queryBook.shelf = "none";
+      queryBook.shelf = 'none';
       this.props.books.forEach(book => {
         if (queryBook.id === book.id) {
           queryBook.shelf = book.shelf;
@@ -72,7 +72,7 @@ class Search extends React.Component {
           </div>
         </div>
         <div className="search-books-results">
-          {(this.state.books.length === 0 || this.state.query === "") && (
+          {(this.state.books.length === 0 || this.state.query === '') && (
             <h2>Sorry no books to show, try to search something else</h2>
           )}
           {(this.state.books.length > 0 && this.state.query.length > 0) && (

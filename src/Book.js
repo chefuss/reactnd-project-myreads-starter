@@ -11,7 +11,7 @@ class Book extends Component {
     };
   }
   camelCaseString(arr) {
-    const array = arr.split(" ");
+    const array = arr.split(' ');
     array[0] = array[0].toLowerCase();
     array.forEach((el, index) => {
       if (index > 0) {
@@ -20,7 +20,7 @@ class Book extends Component {
         array[index] = first + rest;
       }
     });
-    return array.join("");
+    return array.join('');
   }
   toggleModal = () => {    
     this.setState({
@@ -29,13 +29,13 @@ class Book extends Component {
   };
   render() {
     const book = this.props.book;
-    const bookAuthors = book.authors ? book.authors.join(", ") : "";
+    const bookAuthors = book.authors ? book.authors.join(', ') : '';
 
     const bookThumbnail =
       book.imageLinks && book.imageLinks.thumbnail
         ? `url(${book.imageLinks.thumbnail})`
         : "";
-    const categories = ["Currently Reading", "Want to Read", "Read", "None"];
+    const categories = ['Currently Reading', 'Want to Read', 'Read', 'None'];
     return (
       <div className="book">
         <div className="book-top">

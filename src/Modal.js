@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 class Modal extends Component {
   render() {
     if (!this.props.show){
-       document.querySelector("body").style.overflow = "visible";
+       document.querySelector('body').style.overflow = 'visible';
       return null;
     }
     if (this.props.show) {
@@ -13,13 +13,13 @@ class Modal extends Component {
     } 
     const book = this.props.book;
     const state =
-      this.props.book.shelf === "currentlyReading"
-        ? "Currently Reading"
-        : this.props.book.shelf === "wantToRead"
-        ? "Want to read"
-        : this.props.book.shelf === "read" ? 'Read' : 'None';
-    const bookAuthors = book.authors ? book.authors.join(", ") : "";
-    const bookCategories = book.categories ? book.categories.join(", ") : "";
+      this.props.book.shelf === 'currentlyReading'
+        ? 'Currently Reading'
+        : this.props.book.shelf === 'wantToRead'
+        ? 'Want to read'
+        : this.props.book.shelf === 'read' ? 'Read' : 'None';
+    const bookAuthors = book.authors ? book.authors.join(', ') : '';
+    const bookCategories = book.categories ? book.categories.join(', ') : '';
     return (
       <div id="modal" className="modal">
         <div className="modal-container">
