@@ -5,26 +5,6 @@ import BookShelf from "./BookShelf";
 import { Link } from "react-router-dom";
 
 class ListOfBooks extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      books: []
-    }
-  }
-
-  updateList = (book, event) => {
-    let currentBooks = this.props.books;
-    let selectedBook = currentBooks.filter(currentBook => {
-      return currentBook.id === book.id;
-    });
-    selectedBook = selectedBook[0];
-    selectedBook.shelf = event.target.value;
-    BooksAPI.update(selectedBook, event.target.value).then(response => {
-      this.setState({
-        books: currentBooks
-      });
-    });
-  };
   render() {
     return (
       <div className="list-books">
