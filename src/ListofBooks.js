@@ -1,13 +1,16 @@
-import React from "react";
+import React, {Component} from "react";
 import * as BooksAPI from "./BooksAPI";
 import "./App.css";
 import BookShelf from "./BookShelf";
 import { Link } from "react-router-dom";
 
-class ListOfBooks extends React.Component {
-  state = {
-    books: []
-  };
+class ListOfBooks extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      books: []
+    }
+  }
 
   updateList = (book, event) => {
     let currentBooks = this.props.books;
