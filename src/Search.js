@@ -26,7 +26,6 @@ class Search extends React.Component {
       });
       return queryBook;
     });
-
     this.setState({
       books: currentBooks
     });
@@ -34,9 +33,15 @@ class Search extends React.Component {
 
   searchForBooks = query => {
     this.setState({ query });
-    if (query) {
-      BooksAPI.search(query, 20).then(books => {
-        books.length > 0 ? this.updateBooksShelf(books) : this.clearBooks();
+    if (query.length > 1) {
+      
+      BooksAPI.search(query).then(books => {
+        if (books.error) {
+          console.log(books.error)
+          this.clearBooks();
+        } else {
+          books.length > 1 ? this.updateBooksShelf(books) : this.clearBooks();
+        }
       });
     } else {
       this.clearBooks();
@@ -44,10 +49,12 @@ class Search extends React.Component {
   };
 
   clearBooks = () => {
+    console.log('clearing array')
     this.setState({
       books: []
     });
   };
+  
   render() {
     return (
       <div className="search-books">
@@ -65,16 +72,18 @@ class Search extends React.Component {
           </div>
         </div>
         <div className="search-books-results">
-          {this.state.books.length === 0 && (
+          {(this.state.books.length === 0 || this.state.query === "") && (
             <h2>Sorry no books to show, try to search something else</h2>
           )}
-          <ol className="books-grid">
-            {this.state.books.map(book => (
-              <li key={book.id}>
-                <Book book={book} onShelfChange={this.props.onShelfChange} />
-              </li>
-            ))}
-          </ol>
+          {(this.state.books.length > 0 && this.state.query.length > 0) && (
+            <ol className="books-grid">
+              {this.state.books.map(book => (
+                <li key={book.id}>
+                  <Book book={book} onShelfChange={this.props.onShelfChange} />
+                </li>
+              ))}
+            </ol>
+          )}
         </div>
       </div>
     );
