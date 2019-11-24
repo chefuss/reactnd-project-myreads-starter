@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
+import Modal from './Modal'
 
 class Book extends Component {
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false
+    };
+  }
   camelCaseString(arr) {
     const array = arr.split(" ");
     array[0] = array[0].toLowerCase();
@@ -14,10 +20,15 @@ class Book extends Component {
     });
     return array.join("");
   }
- 
+  toggleModal = () => {    
+    this.setState({
+      isOpen: !this.state.isOpen,
+    });
+  };
   render() {
-    const book = this.props.book;   
+    const book = this.props.book;
     const bookAuthors = book.authors ? book.authors.join(", ") : "";
+
     const bookThumbnail =
       book.imageLinks && book.imageLinks.thumbnail
         ? `url(${book.imageLinks.thumbnail})`
@@ -28,6 +39,7 @@ class Book extends Component {
         <div className="book-top">
           <div
             className="book-cover"
+            onClick={this.toggleModal}
             style={{
               width: 128,
               height: 193,
@@ -37,7 +49,9 @@ class Book extends Component {
           <div className="book-shelf-changer">
             <select
               defaultValue={`${book.shelf}`}
-              onChange={event => this.props.onShelfChange(book, event.target.value)}
+              onChange={event =>
+                this.props.onShelfChange(book, event.target.value)
+              }
             >
               <option value="move" disabled>
                 Move to...
@@ -53,8 +67,15 @@ class Book extends Component {
             </select>
           </div>
         </div>
-        <div className="book-title">{book.title}</div>
+        <div className="book-title" onClick={this.toggleModal}>
+          {book.title}
+        </div>
         <div className="book-authors">{bookAuthors}</div>
+        <Modal
+          book={book}
+          show={this.state.isOpen}
+          onClose={this.toggleModal}
+        />
       </div>
     );
   }
