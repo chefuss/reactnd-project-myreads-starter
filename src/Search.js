@@ -11,15 +11,8 @@ class Search extends React.Component {
     this.state = {
       books: props.books,
       query: ""
-    };
-    this.updateQuery.bind(this);
-    this.updateData.bind(this);
+    }
   }
- 
-  /* 
-    If the book has no shelf, set it to none
-    else set it to the correct shelf
-  */
   updateData = books => {
     const currentBooks = books.map(queryBook => {
       queryBook.shelf = "none";
